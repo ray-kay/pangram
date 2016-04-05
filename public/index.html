@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Pangram">
+    <meta name="author" content="Ralf Hauptmann">
+
+    <title>Pangram</title>
+
+    <!-- BS 4 -->
+    <link href="http://v4-alpha.getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- BS 4 - Custom styles for this template -->
+    <link href="http://v4-alpha.getbootstrap.com/examples/cover/cover.css" rel="stylesheet">
+    <!-- nvd3 style -->
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/nvd3/1.8.1/nv.d3.min.css" rel="stylesheet">
+    <!-- custom style -->
+    <link href="css/style.css" rel="stylesheet">
+    <!-- my favicon -->
+    <link rel="shortcut icon" href="http://www.ray-kay.de/graphics/design/ray-kay_icon.ico" type="image/x-icon">
+</head>
+<body>
+<div class="site-wrapper">
+    <div class="site-wrapper-inner">
+        <div class="cover-container">
+            <div class="inner cover">
+                <h1 class="cover-heading">Pangram</h1>
+                <p class="lead">Pangram is a string that contains all the lower-case letters (a to z) at least once.</p>
+
+                <form class="form-inline" id="check_form">
+                    <textarea id="input" class="form-control" name="input" placeholder="Input string"></textarea>
+                    <br>
+                    <button type="submit" class="btn btn-primary">Check</button>
+                </form>
+
+                <label for="output">Output: <span id="output"></span></label>
+            </div>
+
+            <div class="mastfoot">
+                <div class="inner">
+                    <p>Implemented by <a href="mailto:ralf.hauptmann84@gmail.com">Ralf Hauptmann</a></p>
+                    <p>Cover template for <a href="http://v4-alpha.getbootstrap.com" target="_blank">Bootstrap (4 alpha)</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap core JavaScript -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<!-- required by BS 4 tooltip -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.2.0/js/tether.min.js"></script>
+
+<script>window.jQuery || document.write('<script src="http://v4-alpha.getbootstrap.com/assets/js/vendor/jquery.min.js"><\/script>')</script>
+
+<script src="http://v4-alpha.getbootstrap.com/dist/js/bootstrap.min.js"></script>
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+<script src="http://v4-alpha.getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js"></script>
+
+<script>
+    $(function () {
+        $('#check_form').submit(function(e){
+            e.stopPropagation();
+            var inputs = $('#input').val().split("\n"); //input split into array by line break
+            var inputLines = inputs.length;
+            if(inputLines > 1){
+                var n = inputs[0]; //first line contains the number of lines
+                var i = 1; //start with the second line
+
+                var outputText = '';
+
+                while(i <= n){
+                    outputText += ( isPangram(inputs[i]) ? '1' : '0');
+                    i++;
+                }
+
+                $('#output').html(outputText);
+            }
+            return false;
+        });
+    });
+
+    /**
+     * @var string input
+     * @return boolean
+     */
+    function isPangram(input) {
+        //we need to have at least 26 chars
+        if(input.length < 26){
+            return false;
+        }
+        var regex = /([a-z])(?!.*\1)/g; //this regex extract all the unique a-z chars from a string
+
+        /**
+         * string.match returns an array with unique chars or false - then we use an empty array
+         * then we check if we have exactly 26 array elements
+         */
+        return (input.match(regex) || []).length === 26;
+    }
+</script>
+</body>
+</html>
