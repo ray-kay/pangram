@@ -1,0 +1,12 @@
+.cover-container{
+    margin-top: 20px;
+}
+
+#input{
+    width: 100%;
+    min-height: 200px;
+}
+
+.mastfoot{
+    position: inherit;
+}
